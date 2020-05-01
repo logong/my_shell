@@ -18,14 +18,14 @@ void Getpath();
 void GetLogName()
 {
     struct passwd *pwd = getpwuid(getuid());
-    printf("[%s", pwd->pw_name);
+    printf("[\033[36m%s\033[0m", pwd->pw_name);
 }
 //获取主机名
 void Gethostname()
 {
     char name[MAX];
     gethostname(name, sizeof(name));
-    printf("@%s", name);
+    printf("@\033[32m%s\033[32m", name);
 }
 //获取当前文件的路径
 void Getpath()
@@ -36,7 +36,7 @@ void Getpath()
     while (*p != '/')
         --p;
     ++p;
-    printf(" %s]$ ", p);
+    printf(" \033[33m%s\033[0m]$ ", p);
 }
 
 int main()
