@@ -72,6 +72,12 @@ int main()
             printf("bye!");
             return 0;
         }
+        
+        if (strcmp(argv[0], "cd") == 0)
+        {
+            chdir(argv[1]);
+            continue;
+        }
 
         pid_t id = fork();
         if (id < 0)
