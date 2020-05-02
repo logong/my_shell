@@ -75,7 +75,7 @@ int main()
         
         if (strcmp(argv[0], "cd") == 0)
         {
-            chdir(argv[1]);
+            chdir(argv[1]); 
             continue;
         }
 

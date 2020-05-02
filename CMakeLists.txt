@@ -1,0 +1,6 @@
+project (my_shell_test C)
+set(CMAKE_C_STANDARD 11)
+if (CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ansi -pedantic -Wall")
+endif()
+add_executable(demo my_shell_main.c)
