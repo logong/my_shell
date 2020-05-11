@@ -141,8 +141,16 @@ void proc(void)
 	free(buffer);
 }
 
+void init(){
+    if(read_conf() == -1){
+        printf("get conf error");
+    }
+}
+
+
 int main() {
     int i;
+    init();
     //init the BPTable
     for(i=0;i<MAXPIDTABLE;i++)
         BPTable[i] = 0;

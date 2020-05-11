@@ -9,11 +9,16 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h> 
+
+#include <ctype.h>
+#include <assert.h>
+
 #define MAX_PROMPT 1024
 #define MAXLINE 4096 //the length of all args is ARG_MAX
 #define MAXARG 20
 
 struct parse_info;
+struct conf shell_conf;
 struct passwd *pwd;
 char *buffer;
 
@@ -23,8 +28,9 @@ int builtin_command(char *,char **);
 int parsing(char **,int,struct parse_info *);
 void proc(void);
 void sig_handler(int sig);
-
-
+void init();
+int read_conf();
+int change_color(char * color);
 
 #ifndef STRUCT_PARSE_INFO
 #define STRUCT_PARSE_INFO
@@ -33,6 +39,18 @@ void sig_handler(int sig);
 #define OUT_REDIRECT 		4
 #define OUT_REDIRECT_APPEND	8
 #define IS_PIPED 			16
+
+#define BLACK               30
+#define RED                 31
+#define GREEN               32
+#define YELLO               33
+#define BLUE                34
+#define PURPLE              35
+#define L_BLUE              36
+#define WHITE               37
+#define USERNAME_COLOR      change_color(shell_conf.username_color)
+#define HOST_COLOR      change_color(shell_conf.host_color)
+#define ROUTE_COLOR      change_color(shell_conf.route_color)
 struct parse_info 
 {
     int flag;
@@ -41,4 +59,12 @@ struct parse_info
     char* command2;
 	char** parameters2;
 };
+
+struct conf 
+{
+    char host_color[16];
+	char username_color[16];
+	char route_color[16];
+};
+
 #endif
