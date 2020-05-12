@@ -17,6 +17,7 @@
 #define MAXLINE 4096 //the length of all args is ARG_MAX
 #define MAXARG 20
 
+
 struct parse_info;
 struct conf shell_conf;
 struct passwd *pwd;
@@ -51,6 +52,7 @@ int change_color(char * color);
 #define USERNAME_COLOR      change_color(shell_conf.username_color)
 #define HOST_COLOR      change_color(shell_conf.host_color)
 #define ROUTE_COLOR      change_color(shell_conf.route_color)
+
 struct parse_info 
 {
     int flag;

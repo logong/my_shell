@@ -15,7 +15,7 @@ void type_prompt(char *prompt)
     pwd = getpwuid(getuid());
     getcwd(pathname,max_path_len);
     if(gethostname(hostname,max_name_len)==0)
-        sprintf(prompt,"[myshell][\033[%dm%s\033[0m@\033[%dm%s\033[32m:",USERNAME_COLOR,pwd->pw_name,HOST_COLOR,hostname);
+        sprintf(prompt,"[myshell]\033[%dm%s\033[0m@\033[%dm%s\033[32m:",USERNAME_COLOR,pwd->pw_name,HOST_COLOR,hostname);
     else
         sprintf(prompt,"[myshell]%s@unknown:",pwd->pw_name);
     length = strlen(prompt);

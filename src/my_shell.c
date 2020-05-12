@@ -35,10 +35,12 @@ void proc(void)
         int pipe_fd[2],in_fd,out_fd;
         type_prompt(prompt);
         ParaNum = read_command(&command,parameters,prompt);
+
         if(-1 == ParaNum)
             continue;
         ParaNum--;//count of units in buffer
         parsing(parameters,ParaNum,&info);
+
         if(builtin_command(command,parameters))
             continue;
         if(info.flag & IS_PIPED) //command2 is not null
@@ -49,8 +51,9 @@ void proc(void)
                 exit(0);
             }
         }  
-        if((ChdPid = fork())!=0) //wshell
+        if((ChdPid = fork())!=0) //shell
         {
+            #if 1
             if(info.flag & IS_PIPED)// 实现 ||
             {
                 if((ChdPid2=fork()) == 0) //command2
@@ -68,6 +71,7 @@ void proc(void)
                     waitpid(ChdPid2,&status,0); //wait command2
                 }
             }
+            #endif
 
             if(info.flag & BACKGROUND)
             {
@@ -134,7 +138,13 @@ void proc(void)
                 dup2(in_fd, fileno(stdin));
                 close(in_fd); 
             }
-            execvp(command,parameters);
+
+
+            if( execvp(command,parameters) == -1)
+                {
+                    printf("command not find!\n");
+                    exit(0);
+                }
         }
     }
     free(parameters);
@@ -148,7 +158,8 @@ void init(){
 }
 
 
-int main() {
+int main() 
+{
     int i;
     init();
     //init the BPTable

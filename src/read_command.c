@@ -99,6 +99,8 @@ int read_command(char **command,char **parameters,char *prompt)
     int i;
     for(i=0;i<count-1;i++)
         printf("[%s]\n",parameters[i]);
+    pid_t pid = getpid();
+    printf("pid = %d \n",pid);
 #endif
 
     return count;
