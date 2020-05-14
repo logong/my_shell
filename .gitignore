@@ -52,8 +52,8 @@ Mkfile.old
 dkms.conf
 
 # build file
-/build/
+/build
 
 # Debug
 *.txt
-
+run_gdb.sh
