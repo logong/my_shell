@@ -6,7 +6,8 @@ pid_t BPTable[MAXPIDTABLE];
 
 void sig_handler(int sig)
 {
-
+    printf("bye!\n");
+    exit(0);
 }
 
 void proc(void)
@@ -81,7 +82,7 @@ void proc(void)
                     if(BPTable[i]==0)
                         BPTable[i] = ChdPid; //register a background process
                 if(i==MAXPIDTABLE)
-                    perror("Too much background processes\nThere will be zombine process");                    
+                    perror("Too much background processes\nThere will be zombine process");
             }
             else
             {          
@@ -155,6 +156,7 @@ void init(){
     if(read_conf() == -1){
         printf("get conf error");
     }
+    signal(SIGINT,sig_handler);
 }
 
 

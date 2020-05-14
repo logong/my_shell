@@ -41,14 +41,7 @@ int change_color(char * color);
 #define OUT_REDIRECT_APPEND	8
 #define IS_PIPED 			16
 
-#define BLACK               30
-#define RED                 31
-#define GREEN               32
-#define YELLO               33
-#define BLUE                34
-#define PURPLE              35
-#define L_BLUE              36
-#define WHITE               37
+
 #define USERNAME_COLOR      change_color(shell_conf.username_color)
 #define HOST_COLOR      change_color(shell_conf.host_color)
 #define ROUTE_COLOR      change_color(shell_conf.route_color)
