@@ -1,4 +1,4 @@
-#include "my_shell.h"
+#include "../include/my_shell.h"
 #define TRUE 1
 #define MAXPIDTABLE 1024
 
@@ -34,15 +34,17 @@ void proc(void)
     while(TRUE)
     {
         int pipe_fd[2],in_fd,out_fd;
+        
         type_prompt(prompt);
         ParaNum = read_command(&command,parameters,prompt);
 
         if(-1 == ParaNum)
             continue;
         ParaNum--;//count of units in buffer
+        
         parsing(parameters,ParaNum,&info);
 
-        if(builtin_command(command,parameters))
+        if(builtin_command(command,parameters,&info))
             continue;
         if(info.flag & IS_PIPED) //command2 is not null
         {                
@@ -140,19 +142,28 @@ void proc(void)
                 close(in_fd); 
             }
 
-
+            // exit
             if( execvp(command,parameters) == -1)
+            {
+                if( info.builtin == yes )
+                    break;
+                else
                 {
                     printf("command not find!\n");
                     exit(0);
                 }
+            }
         }
     }
     free(parameters);
 	free(buffer);
 }
 
-void init(){
+void init()
+{   
+
+    init_his();
+
     if(read_conf() == -1){
         printf("get conf error");
     }

@@ -1,8 +1,10 @@
-#include "my_shell.h"
+#include "../include/my_shell.h"
 
-int builtin_command(char *command, char **parameters )
+int builtin_command(char *command, char **parameters ,struct parse_info* info)
 {
     extern struct passwd *pwd;
+    info->builtin = yes;
+
     if (strcmp(command, "exit") == 0 || strcmp(command, "quit") == 0)
     {
         
@@ -42,6 +44,7 @@ int builtin_command(char *command, char **parameters )
                 strcpy(cd_path, pwd->pw_dir);
                 strncpy(cd_path + strlen(pwd->pw_dir), parameters[1] + 1, strlen(parameters[1]));
                 //printf("path with ~:\n%s\n",cd_path);
+                return 0;
             }
             else
             {
@@ -55,6 +58,18 @@ int builtin_command(char *command, char **parameters )
             if (chdir(cd_path) != 0)
                 printf("shell: cd: %s:%s\n", cd_path, strerror(errno));
             free(cd_path);
+            return 0;
         }
+        else if(strcmp(command, "history") == 0)
+        {
+            //no free
+            his_now = &his_head;
+            for(;his_now->next != NULL ; his_now = his_now->next)
+            {
+                printf("num: %d , str: %s\n",his_now->num,his_now->his_str);
+            }
+            return 0;
+        }
+        info->builtin = no;
         return 0;
     }

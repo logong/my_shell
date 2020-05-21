@@ -1,12 +1,14 @@
-#include "my_shell.h"
+#include "../include/my_shell.h"
 #ifdef READLINE_ON
 #include <readline/readline.h>
 #include <readline/history.h>
-#endif
+#endif 
+
 
 //return value: number of parameters
 //0 represents only command without any parameters
 //-1 represents wrong input
+
 int read_command(char **command,char **parameters,char *prompt)
 {
 #ifdef READLINE_ON
@@ -65,7 +67,25 @@ int read_command(char **command,char **parameters,char *prompt)
             count += 2;
 #ifdef DEBUG
             printf("\ncommand:%s\n",*command);
+#endif  
+            // add history
+            struct his_info *p_new_info = malloc(sizeof(struct his_info));
+            p_new_info->his_str = malloc(sizeof(strlen(*command)) + 1);
+
+            // to-do error handler
+
+            strcpy(p_new_info->his_str,*command);
+            p_new_info->num = his_now->num + 1;
+            p_new_info->next =NULL;
+
+            his_now->next = p_new_info;
+            his_now = his_now->next;
+
+#ifdef DEBUG
+            printf("\nnow his num:%d\n",his_now->num);
+            printf("\nnow string :%s\n",his_now->his_str);
 #endif
+
         }
         else if(count <= MAXARG)
         {
@@ -105,3 +125,4 @@ int read_command(char **command,char **parameters,char *prompt)
 
     return count;
 }
+
