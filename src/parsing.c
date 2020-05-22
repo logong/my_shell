@@ -41,6 +41,7 @@ int parsing(char **parameters, int ParaNum, struct parse_info *info)
         parameters[ParaNum - 1] = NULL;
         ParaNum--;
     }
+    
     int i;
     parse_info_init(info);
     if (strcmp(parameters[ParaNum - 1], "&") == 0)

@@ -155,8 +155,8 @@ void proc(void)
             }
         }
     }
-    free(parameters);
-	free(buffer);
+    free_res(parameters);
+    free_res(buffer);
 }
 
 void init()
