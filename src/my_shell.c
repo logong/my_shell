@@ -150,13 +150,28 @@ void proc(void)
                 else
                 {
                     printf("command not find!\n");
+                    destructor(parameters,buffer);
                     exit(0);
                 }
             }
         }
     }
+    destructor(parameters,buffer);
+}
+
+
+/////////////////////////////////////////////////
+//
+//add global destructor here , when we call exit
+//we should call destructor first
+//先实现一个简单的函数来实现 ,给定固定的析构参数
+//
+////////////////////////////////////////////////
+void destructor(void* parameters,void* buffer)
+{
     free_res(parameters);
     free_res(buffer);
+    free_his();
 }
 
 void init()

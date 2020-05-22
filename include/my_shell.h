@@ -31,6 +31,7 @@ void sig_handler(int sig);
 void init();
 int read_conf();
 int change_color(char *color);
+void destructor(void* parameters,void* buffer);
 
 #ifndef STRUCT_PARSE_INFO
 #define STRUCT_PARSE_INFO
@@ -104,6 +105,20 @@ struct his_info *his_now;
         his_now = his_now->next;                                                            \
     } while (0)
 
+#define free_his()                                             \
+    do                                                         \
+    {                                                          \
+        his_now = &his_head;                                   \
+        for (; his_now->next != NULL; his_now = his_now->next) \
+        {                                                      \
+            struct his_info *temp = his_now;                   \
+            free_res(temp->his_str);                           \
+            free_res(temp);                                    \
+        }                                                      \
+    } while (0)
+
+
+
 //////////////////////////////////////////////////////////////////////
 //
 //
@@ -117,10 +132,10 @@ struct his_info *his_now;
     {                                \
         assert(res_name == NULL);    \
         free(res_name);              \
-        if (res_name != NULL)         \
+        if (res_name != NULL)        \
         {                            \
             printf("free error!\n"); \
         }                            \
-} while (0)
+    } while (0)
 
 #endif
