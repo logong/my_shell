@@ -15,7 +15,7 @@
 #define MAX_PROMPT 1024
 #define MAXLINE 4096 //the length of all args is ARG_MAX
 #define MAXARG 20
-#define DEBUG 1
+//#define DEBUG 1
 
 struct parse_info;
 struct conf shell_conf;

@@ -3,6 +3,7 @@
 int builtin_command(char *command, char **parameters ,struct parse_info* info)
 {
     extern struct passwd *pwd;
+    extern struct conf shell_conf;
     info->builtin = yes;
 
     if (strcmp(command, "exit") == 0 || strcmp(command, "quit") == 0)
@@ -67,6 +68,43 @@ int builtin_command(char *command, char **parameters ,struct parse_info* info)
             for(;his_now->next != NULL ; his_now = his_now->next)
             {
                 printf("num: %d , str: %s\n",his_now->num,his_now->his_str);
+            }
+            return 0;
+        }else if(strcmp(command, "setcolor") == 0)
+        {
+            if (parameters[1] == NULL){
+                printf("\n       _                                      _            \n      | |                                    | |           \n   ___| |__   __ _ _ __   __ _  ___  ___ ___ | | ___  _ __ \n  / __| '_ \\ / _` | '_ \\ / _` |/ _ \\/ __/ _ \\| |/ _ \\| '__|\n | (__| | | | (_| | | | | (_| |  __/ (_| (_) | | (_) | |   \n  \\___|_| |_|\\__,_|_| |_|\\__, |\\___|\\___\\___/|_|\\___/|_|   \n                         __/ |                            \n                         |___/                             \n");
+                printf("set command color as you want!\n");
+                printf("use 'setcolor [Option] <Color>' to defind your color\n");
+                printf("Option:\n");
+                printf("\thostColor\n");
+                printf("\tusernameColor\n");
+                printf("\trouteColor\n");
+                printf("Color:\n");
+                printf("\tRED\tBLACK\tGREEN\n");
+                printf("\tYELLO\tBLUE\tPURPLE\n");
+                printf("\tRED\tBLACK\tGREEN\n");
+                printf("\tL_BLUE\tWHITE\n");
+            }else if (strcmp(parameters[1],"hostColor") == 0)
+            {
+                strcpy(shell_conf.host_color,parameters[2]);
+            } else if (strcmp(parameters[1],"usernameColor") == 0){
+                strcpy(shell_conf.username_color,parameters[2]);
+            } else if (strcmp(parameters[1],"routeColor") == 0){
+                strcpy(shell_conf.route_color,parameters[2]);
+            } else {
+                printf("\n       _                                      _            \n      | |                                    | |           \n   ___| |__   __ _ _ __   __ _  ___  ___ ___ | | ___  _ __ \n  / __| '_ \\ / _` | '_ \\ / _` |/ _ \\/ __/ _ \\| |/ _ \\| '__|\n | (__| | | | (_| | | | | (_| |  __/ (_| (_) | | (_) | |   \n  \\___|_| |_|\\__,_|_| |_|\\__, |\\___|\\___\\___/|_|\\___/|_|   \n                         __/ |                            \n                         |___/                             \n");
+                printf("set command color as you want!\n");
+                printf("use 'setcolor [Option] <Color>' to defind your color\n");
+                printf("Option:\n");
+                printf("\thostColor\n");
+                printf("\tusernameColor\n");
+                printf("\trouteColor\n");
+                printf("Color:\n");
+                printf("\tRED\tBLACK\tGREEN\n");
+                printf("\tYELLO\tBLUE\tPURPLE\n");
+                printf("\tRED\tBLACK\tGREEN\n");
+                printf("\tL_BLUE\tWHITE\n");
             }
             return 0;
         }
