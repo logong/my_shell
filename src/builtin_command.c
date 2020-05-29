@@ -13,6 +13,7 @@ int builtin_command(char *command, char **parameters ,struct parse_info* info)
         pid_t pid = getpid();
         printf("pid = %d",pid);
 #endif
+        destructor(parameters,NULL);
         exit(0);
 
     }

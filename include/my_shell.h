@@ -21,6 +21,7 @@ struct parse_info;
 struct conf shell_conf;
 struct passwd *pwd;
 char *buffer;
+const char* c_buffer;
 
 void type_prompt(char *);
 int read_command(char **, char **, char *);
@@ -31,7 +32,7 @@ void sig_handler(int sig);
 void init();
 int read_conf();
 int change_color(char *color);
-void destructor(void* parameters,void* buffer);
+void destructor(void* parameters,const char* buffer);
 
 #ifndef STRUCT_PARSE_INFO
 #define STRUCT_PARSE_INFO
@@ -130,8 +131,10 @@ struct his_info *his_now;
 #define free_res(res_name)           \
     do                               \
     {                                \
-        assert(res_name == NULL);    \
-        free(res_name);              \
+        if(res_name)                 \
+            break;                   \
+        free((void*)(res_name));     \
+        res_name = NULL;             \
         if (res_name != NULL)        \
         {                            \
             printf("free error!\n"); \
