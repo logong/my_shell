@@ -163,9 +163,8 @@ void init()
 {   
 
     init_his();
-
     if(read_conf() == -1){
-        printf("get conf error");
+        printf("\033[31mGet conf error\nWe will use default config\n\033[0m");
     }
     signal(SIGINT,sig_handler);
 }

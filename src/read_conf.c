@@ -62,11 +62,17 @@ static char * a_trim(char * szOutput, const char * szInput)
 	return szOutput;
 }
  
+ //get config from file
+ //--example.txt
+ //[COLOR]
+ //test_COlOR=RED
+ //--
+ // you can use GetProfileString("example.txt","COLOR","test_COLOR",varYouUseToStoreValue)
 int GetProfileString(char *profile, char *AppName, char *KeyName, char *KeyVal)
 {
 	char appname[32],keyname[32];
 	char *buf,*c;
-	char buf_i[KEYVALLEN], buf_o[KEYVALLEN];
+	char buf_i[KEYVALLEN], buf_o[KEYVALLEN]; //input output
  
 	FILE *fp;
 	int found=0; /* 1 AppName 2 KeyName */
@@ -77,20 +83,24 @@ int GetProfileString(char *profile, char *AppName, char *KeyName, char *KeyVal)
 		return(-1);
 	}
  
+	//Set a pointer to the beginning of the file
 	fseek( fp, 0, SEEK_SET );
 	memset( appname, 0, sizeof(appname) );
+
+	//Surround the name of the configuration block with []
 	sprintf( appname,"[%s]", AppName );
  
 	while( !feof(fp) && fgets( buf_i, KEYVALLEN, fp )!=NULL )
 	{
 		l_trim(buf_o, buf_i);
- 
+
 		if( strlen(buf_o) <= 0 )
 			continue;
  
 		buf = NULL;
 		buf = buf_o;
  
+		//find App block
 		if( found == 0 )
 		{
 			if( buf[0] != '[' ) 
@@ -118,12 +128,17 @@ int GetProfileString(char *profile, char *AppName, char *KeyName, char *KeyVal)
 				if( (c = (char*)strchr(buf, '=')) == NULL )
 					continue;
  
+
 				memset( keyname, 0, sizeof(keyname) );
+				
+				//Cut the left half
 				sscanf( buf, "%[^=|^ |^\t]", keyname );
  
 				if( strcmp(keyname, KeyName) == 0 )
 				{
+					//Cut the right half
 					sscanf( ++c, "%[^\n]", KeyVal );
+
 					char *KeyVal_o = (char *)malloc(strlen(KeyVal) + 1);
  
 					if(KeyVal_o != NULL)
@@ -155,6 +170,10 @@ int GetProfileString(char *profile, char *AppName, char *KeyName, char *KeyVal)
 	return(-1);
 }
 
+// used to change color, every time we need to print word to screen 
+// we use this function to get right color number.
+// for example, if we got RED we choose 'D',and return 31
+
 int change_color(char * color){
 	//printf("%s",color);
 	switch(color[2]){
@@ -171,6 +190,8 @@ int change_color(char * color){
 }
 
 
+//got three config string from config file.
+//if it's not get right config file or configs. It will be -1
 int read_conf()
 {
 	extern struct conf shell_conf;
