@@ -200,5 +200,10 @@ int read_conf()
 			if (GetProfileString("../.my_shellrc", "color", "route_color", shell_conf.route_color)!= -1){
 				return 0;
 			}
+	if (GetProfileString(".my_shellrc", "color", "host_color", shell_conf.host_color) != -1)
+		if (GetProfileString(".my_shellrc", "color", "username_color", shell_conf.username_color) != -1)
+			if (GetProfileString(".my_shellrc", "color", "route_color", shell_conf.route_color)!= -1){
+				return 0;
+			}
 	return -1;
 }

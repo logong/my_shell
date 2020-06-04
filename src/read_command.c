@@ -65,23 +65,11 @@ int read_command(char **command,char **parameters,char *prompt)
             //else //p==pStart
             parameters[0] = p;
             count += 2;
+
+            add_his();
+
 #ifdef DEBUG
             printf("\ncommand:%s\n",*command);
-#endif  
-            // add history
-            struct his_info *p_new_info = malloc(sizeof(struct his_info));
-            p_new_info->his_str = malloc(sizeof(strlen(*command)) + 1);
-
-            // to-do error handler
-
-            strcpy(p_new_info->his_str,*command);
-            p_new_info->num = his_now->num + 1;
-            p_new_info->next =NULL;
-
-            his_now->next = p_new_info;
-            his_now = his_now->next;
-
-#ifdef DEBUG
             printf("\nnow his num:%d\n",his_now->num);
             printf("\nnow string :%s\n",his_now->his_str);
 #endif

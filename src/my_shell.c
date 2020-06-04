@@ -23,7 +23,7 @@ void proc(void)
 
     parameters = malloc(sizeof(char *)*(MAXARG+2));
     buffer = malloc(sizeof(char) * MAXLINE);
-    
+    c_buffer = buffer;
     if(parameters == NULL || buffer == NULL)
     {
         printf("my_shell error:malloc failed.\n");
@@ -155,8 +155,22 @@ void proc(void)
             }
         }
     }
-    free(parameters);
-	free(buffer);
+    destructor(parameters,c_buffer);
+}
+
+
+/////////////////////////////////////////////////
+//
+//add global destructor here , when we call exit
+//we should call destructor first
+//先实现一个简单的函数来实现 ,给定固定的析构参数
+//
+////////////////////////////////////////////////
+void destructor(void* parameters,const char* buffer)
+{
+    free_res(parameters);
+    free_res(buffer);
+    free_his();
 }
 
 void init()
